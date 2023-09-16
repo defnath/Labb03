@@ -32,7 +32,7 @@ class Program
     }
 
     //De forma desconectada
-    private static DataTable ListarTrabajadoresDataTable()
+    public static DataTable ListarTrabajadoresDataTable()
     {
         // Crear un DataTable para almacenar los resultados
         DataTable dataTable = new DataTable();
@@ -60,7 +60,7 @@ class Program
     }
 
     //De forma conectada
-    private static List<Trabajador> ListarTrabajadoresListaObjetos()
+    public static List<Trabajador> ListarTrabajadoresListaObjetos()
     {
         List<Trabajador> trabajadores = new List<Trabajador>();
 
