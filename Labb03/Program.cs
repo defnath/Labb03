@@ -2,7 +2,6 @@
 using System.Data.SqlClient;
 using System.Data;
 
-using ConsoleApp3;
 using Labb03;
 
 class Program
@@ -17,7 +16,7 @@ class Program
     }
 
     //De forma desconectada
-    private static DataTable ListarEmpleadosDataTable()
+    private static DataTable ListarTrabajadoresDataTable()
     {
         // Crear un DataTable para almacenar los resultados
         DataTable dataTable = new DataTable();
@@ -45,9 +44,9 @@ class Program
     }
 
     //De forma conectada
-    private static List<Trabajador> ListarEmpleadosListaObjetos()
+    private static List<Trabajador> ListarTrabajadoresListaObjetos()
     {
-        List<Trabajador> empleados = new List<Trabajador>();
+        List<Trabajador> trabajadores = new List<Trabajador>();
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -68,14 +67,14 @@ class Program
                         {
                             // Leer los datos de cada fila
 
-                            empleados.Add(new Trabajador
+                            trabajadores.Add(new Trabajador
                             {
                                 Id = (int)reader["IdTrabajador"],
                                 Nombre = reader["Nombre"].ToString(),
                                 Apellido = reader["Apellido"].ToString(),
-                                Sueldo = reader["Sueldo"].ToString(),
-                                Fecha_nac = reader["Fecha_nac"].ToString()                            });
-
+                                Sueldo = reader["Sueldo"] == DBNull.Value?0:(int)reader["Sueldo"],
+                                Fecha_nac = (DateTime)reader["Fecha_nac"]                            
+                            });
                         }
                     }
                 }
@@ -86,7 +85,7 @@ class Program
 
 
         }
-        return empleados;
+        return trabajadores;
 
     }
 
