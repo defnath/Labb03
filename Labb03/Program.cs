@@ -7,12 +7,28 @@ using Labb03;
 class Program
 {
     // Cadena de conexión a la base de datos
-    public static string connectionString = "Data Source=LAB1504-09\\SQLEXPRESS;Initial Catalog=Neptuno2;User ID=usertecsup;Password=123456";
+    public static string connectionString = "Data Source=LAB1504-09\\SQLEXPRESS;User ID=usertecsup;Password=123456";
 
 
     static void Main()
     {
+        List<Trabajador> trabajadores = ListarTrabajadoresListaObjetos();
 
+        if (trabajadores != null && trabajadores.Count > 0)
+        {
+            Console.WriteLine("Lista de Trabajadores:");
+
+            foreach (var trabajador in trabajadores)
+            {
+                Console.WriteLine(trabajador.ToString());
+            }
+        }
+        else
+        {
+            Console.WriteLine("No se encontraron trabajadores");
+        }
+
+        Console.ReadLine();
     }
 
     //De forma desconectada
@@ -54,7 +70,7 @@ class Program
             connection.Open();
 
             // Consulta SQL para seleccionar datos
-            string query = "SELECT IdTrabajador,Nombre,Apellido,Sueldo,Fecha_nac FROM Trabajador";
+            string query = "SELECT IdTrabajador,Nombre,Apellido,Sueldo,Fecha_nac FROM Trabajadores";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -72,7 +88,7 @@ class Program
                                 Id = (int)reader["IdTrabajador"],
                                 Nombre = reader["Nombre"].ToString(),
                                 Apellido = reader["Apellido"].ToString(),
-                                Sueldo = reader["Sueldo"] == DBNull.Value?0:(int)reader["Sueldo"],
+                                Sueldo = (int)reader["Sueldo"],
                                 Fecha_nac = (DateTime)reader["Fecha_nac"]                            
                             });
                         }
