@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Data;
 
 using ConsoleApp3;
+using Labb03;
 
 class Program
 {
@@ -44,9 +45,9 @@ class Program
     }
 
     //De forma conectada
-    private static List<Empleado> ListarEmpleadosListaObjetos()
+    private static List<Trabajador> ListarEmpleadosListaObjetos()
     {
-        List<Empleado> empleados = new List<Empleado>();
+        List<Trabajador> empleados = new List<Trabajador>();
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -54,7 +55,7 @@ class Program
             connection.Open();
 
             // Consulta SQL para seleccionar datos
-            string query = "SELECT IdEmpleado,Nombre,Cargo FROM Empleados1";
+            string query = "SELECT IdTrabajador,Nombre,Apellido,Sueldo,Fecha_nac FROM Trabajador";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -67,12 +68,13 @@ class Program
                         {
                             // Leer los datos de cada fila
 
-                            empleados.Add(new Empleado
+                            empleados.Add(new Trabajador
                             {
-                                Id = (int)reader["IdEmpleado"],
+                                Id = (int)reader["IdTrabajador"],
                                 Nombre = reader["Nombre"].ToString(),
-                                Cargo = reader["Cargo"].ToString()
-                            });
+                                Apellido = reader["Apellido"].ToString(),
+                                Sueldo = reader["Sueldo"].ToString(),
+                                Fecha_nac = reader["Fecha_nac"].ToString()                            });
 
                         }
                     }
